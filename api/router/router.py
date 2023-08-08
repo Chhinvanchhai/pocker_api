@@ -19,9 +19,9 @@ def users():
 def get(id):
   return userController.get(id)
 
-@app.route('/users/<int:id>/update', methods = ['GET', 'POST'])
+@app.route('/users/<int:id>/update', methods = ['POST'])
 def update(id):
-  return userController.update(id, )
+  return userController.update(id)
 
 @app.route('/users/<int:id>', methods = ['DELETE'])
 def delete(id):

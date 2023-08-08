@@ -17,7 +17,7 @@ class UserController:
         return  self.userService.get(id)
 
     def update(self, id):
-        return  self.userService.update(id)
+        return  self.userService.update(id, request.json)
 
     def delete(self, id):
         return  self.userService.delete(id)
