@@ -5,12 +5,15 @@
 """  
 
 from api import app
+from api.controller.AuthController import AuthController
 from api.controller.UserController import UserController
 from api.services.UserSerivce import UserService
 
 userService  = UserService()
 userController = UserController(userService)
+authController = AuthController()
 
+# user routing
 @app.route('/users', methods = ['POST', 'GET'])
 def users():   
   return  userController.users()
@@ -26,3 +29,8 @@ def update(id):
 @app.route('/users/<int:id>', methods = ['DELETE'])
 def delete(id):
   return userController.delete(id)
+
+# auth routing
+@app.route('/login', methods=['POST'])
+def login():
+  return authController.login()

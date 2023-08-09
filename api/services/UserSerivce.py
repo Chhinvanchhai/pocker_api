@@ -1,24 +1,19 @@
 
 from flask import jsonify, make_response
 from api.config.db import db, User
+from api.dto.response.UserDto import UserDto
+from api.shared.Utils import FailedHanlde
+    
 class UserService: 
+
+    
     
     def users(self):
-        users = User.query.all()
-        json = {
-            "status": True,
-            "data": []
-        }
-        for row in users:
-            json['data'].append({
-                "id": row.id,
-                "email": row.email,
-                "username": row.username,
-                "lastName": row.lastName,
-                "firstName": row.firstName
-            })
-            print(row.username)
-        return make_response(jsonify(json), 200)
+        try: 
+            users = User.query.all()
+            return users
+        except Exception as e:
+            return f"An exception occurred: {str(e)}"
         
     
     def get(self,id):
@@ -35,19 +30,25 @@ class UserService:
         }
         return make_response(jsonify(json), 200)
     
-    def store(self, data):
-        user = User(
-            email=data['email'],
-            password=data['password'],
-            username=data['username']
-        )
-        db.session.add(user)
-        db.session.commit()
-        json = {
-                "status": True,
-                "message": "Added Successfull"
-        }
-        return make_response(jsonify(json), 200)
+    def store(self,  data):
+        try:
+            user = User(
+                email=data['email'],
+                password=data['password'],
+                username=data['username'],
+                lastName=data['lastName'],
+                firstName=data['firstName'],
+                status=data['status'],
+            )
+            db.session.add(user)
+            db.session.commit()
+            json = {
+                    "status": True,
+                    "message": "Added Successfull"
+            }
+            return make_response(jsonify(json), 200)
+        except FailedHanlde as e:
+            return str(e)
 
     def update(self, id, data):
         user = User.query.get_or_404(id)

@@ -1,3 +1,0 @@
-class UserDto: 
-    name = ""
-    email = ""

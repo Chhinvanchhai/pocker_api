@@ -12,9 +12,4 @@ class User:
         self.lastName = lastName
         self.firstName = firstName
         self.createdAt = createdAt
-        self.status = status
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String)
-        
+        self.status = status        
