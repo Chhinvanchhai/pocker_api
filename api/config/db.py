@@ -18,14 +18,13 @@ from api import app
 # app.config['SQLALCHEMY_DATABASE_URI'] = userpass + basedir + dbname
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # ========
-
+db = SQLAlchemy()
 # for postgre
-# db_url = "postgresql://postgres:123456@localhost:5432/poker"
-# app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+db_url = "postgresql://postgres:123456@localhost:5432/poker"
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 
 # ====---sqlite---=====
-db = SQLAlchemy()
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)
 
 class User(db.Model):
