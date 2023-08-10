@@ -10,10 +10,11 @@ class Utils:
         }
         return make_response(jsonify(json), statusCode)
     
-    def validationResponse(self,statusCode, code, messages):
+    def validationResponse(self,statusCode, code, status,  messages):
         json = {
             "code": code,
-            "messages": messages
+            "status": status,
+            "errors": messages
         }
         return make_response(jsonify(json), statusCode)
     

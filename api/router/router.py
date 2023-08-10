@@ -5,6 +5,10 @@
 """  
 
 from api import app
+from flask import Flask, jsonify, request
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 from api.controller.AuthController import AuthController
 from api.controller.UserController import UserController
 from api.services.UserSerivce import UserService
@@ -34,3 +38,9 @@ def delete(id):
 @app.route('/login', methods=['POST'])
 def login():
   return authController.login()
+
+@app.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+   get_jwt_identity()
+   return authController.protected()

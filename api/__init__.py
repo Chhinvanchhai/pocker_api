@@ -1,5 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+from flask_jwt_extended import JWTManager
 
 app  = Flask("api")
-app.secret_key = '123456'
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
 from api.router.router import *
+

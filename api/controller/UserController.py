@@ -18,12 +18,12 @@ class UserController(Utils):
       self.userService = userService
 
     def users(self):
-        req:UserDto = request.json
+        req = UserDto(request.json)
         print("request=====", req)
         try:
             if request.method == 'POST':
                 if not self.isEmail(request.json['email']):
-                    return self.validationResponse(400,400, ["email is invalide!"])
+                    return self.validationResponse(500,400, 'failed validation' ,["email is invalide!"])
                 
                 return self.userService.store()
             else:
