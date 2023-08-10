@@ -10,16 +10,16 @@ import pymysql
 # configure the SQLite database, relative to the app instance folder
 
 # ========
-userpass = 'mysql+pymysql://root:@'
-basedir  = '127.0.0.1'
-dbname   = '/pocker'
-socket   = '?unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock'
-dbname   = dbname + socket
-app.config['SQLALCHEMY_DATABASE_URI'] = userpass + basedir + dbname
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+# userpass = 'mysql+pymysql://root:@'
+# basedir  = '127.0.0.1'
+# dbname   = '/pocker'
+# socket   = '?unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock'
+# dbname   = dbname + socket
+# app.config['SQLALCHEMY_DATABASE_URI'] = userpass + basedir + dbname
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # ========
 db = SQLAlchemy()
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)
 
 class User(db.Model):

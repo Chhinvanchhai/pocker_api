@@ -1,1 +1,9 @@
 .venv/*
+api/config/__pycache__/*
+api/controller/__pycache__/*
+api/dto/__pycache__/*
+api/models/__pycache__/*
+api/router/__pycache__/*
+api/services/__pycache__/*
+api/shared/__pycache__/*
+api/__pycache__/*
