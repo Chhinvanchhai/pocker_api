@@ -31,6 +31,7 @@ class UserService:
         return make_response(jsonify(json), 200)
     
     def store(self,  data):
+        print("data =====", data)
         try:
             user = User(
                 email=data['email'],

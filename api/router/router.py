@@ -5,6 +5,7 @@
 """  
 
 from api import app
+import os
 from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -16,6 +17,13 @@ from api.services.UserSerivce import UserService
 userService  = UserService()
 userController = UserController(userService)
 authController = AuthController()
+
+# user routing
+@app.route('/', methods = ['POST', 'GET'])
+def welcome():   
+  print("in=====welcome")
+  print("process==env=", os.getenv("DOMAIN"))
+  return "wellcome"
 
 # user routing
 @app.route('/users', methods = ['POST', 'GET'])

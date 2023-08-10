@@ -1,9 +1,9 @@
 
 import datetime
-from flask import Flask
+# from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from api import app
-import pymysql
+# import pymysql
 
 
 # create the app
@@ -18,6 +18,12 @@ import pymysql
 # app.config['SQLALCHEMY_DATABASE_URI'] = userpass + basedir + dbname
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # ========
+
+# for postgre
+# db_url = "postgresql://postgres:123456@localhost:5432/poker"
+# app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+
+# ====---sqlite---=====
 db = SQLAlchemy()
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)

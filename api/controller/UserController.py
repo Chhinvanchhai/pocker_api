@@ -25,7 +25,7 @@ class UserController(Utils):
                 if not self.isEmail(request.json['email']):
                     return self.validationResponse(500,400, 'failed validation' ,["email is invalide!"])
                 
-                return self.userService.store()
+                return self.userService.store(request.json)
             else:
                 listUser =  self.userService.users()
                 data = []
