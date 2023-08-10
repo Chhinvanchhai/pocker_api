@@ -20,11 +20,11 @@ from api import app
 # ========
 db = SQLAlchemy()
 # for postgre
-db_url = "postgresql://postgres:123456@localhost:5432/poker"
-app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+# db_url = "postgresql://postgres:123456@localhost:5432/poker"
+# app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 
 # ====---sqlite---=====
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 db.init_app(app)
 
 class User(db.Model):

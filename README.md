@@ -26,6 +26,7 @@
 pip freeze > requirements.txt 
 ```
 
+ docker run --name some-postgres -e POSTGRES_PASSWORD=123456 -d postgres 
 
 
 ### See more
