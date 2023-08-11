@@ -18,8 +18,8 @@ class UserController(Utils):
       self.userService = userService
 
     def users(self):
-        req = UserDto(request.json)
-        print("request=====", req)
+        # req = UserDto(request.json)
+        # print("request=====", req)
         try:
             if request.method == 'POST':
                 if not self.isEmail(request.json['email']):
