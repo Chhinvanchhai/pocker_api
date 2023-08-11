@@ -1,6 +1,7 @@
 from flask import jsonify, make_response
 import re
-
+from api import app
+from api import datetime
 class Utils: 
     def Response(self,statusCode, code, status, data):
         json = {
@@ -24,6 +25,10 @@ class Utils:
             return True
         else:
             return False
+    
+    def logs(self, value): 
+        log_name = str(datetime.now().strftime("%Y-%m-%d:%M:%S"))+": "+ str(value)
+        app.logger.info(log_name)
     
 
 class FailedHanlde(Exception):

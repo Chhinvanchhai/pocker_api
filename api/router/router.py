@@ -6,6 +6,7 @@
 
 from api import app
 import os
+import json
 from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -13,19 +14,34 @@ from flask_jwt_extended import jwt_required
 from api.controller.AuthController import AuthController
 from api.controller.UserController import UserController
 from api.services.UserSerivce import UserService
+from api.shared.Utils import Utils
+from api.middleware.HandleRequest import HandleRequest
 
 userService  = UserService()
 userController = UserController(userService)
 authController = AuthController()
+handleRequest = HandleRequest()
+
+
+# for hande request
+@app.before_request
+def middleware(): 
+    handleRequest.onRequest(request)
+
+@app.after_request
+def after_request(response):
+     handleRequest.onResponse(response)
+     return response
+# end request handle
 
 # user routing
 @app.route('/', methods = ['POST', 'GET'])
 def welcome():   
-  print("in=====welcome")
-  print("process==env=", os.getenv("DOMAIN"))
+  Utils.logs('tesing')
   return "wellcome"
 
 # user routing
+# @middleware()
 @app.route('/users', methods = ['POST', 'GET'])
 def users():   
   return  userController.users()
