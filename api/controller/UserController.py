@@ -2,7 +2,7 @@
 from api.dto.response.UserDto import UserDto
 from api.services.UserSerivce import UserService
 from api.shared.Utils import Utils, Validator
-from flask import request
+from flask import jsonify, request
 # from wtforms import Form , StringField, PasswordField, validators
 
 # class RegistrationForm(Form):
@@ -30,12 +30,17 @@ class UserController(Utils):
                 listUser =  self.userService.users()
                 data = []
                 for row in listUser:
+                    addresses = []
+                    if row:
+                        for address in row.addresses:
+                            addresses.append({"email_address": address.email_address, 'id': address.id})
                     data.append({
                         "id": row.id,
                         "email": row.email,
                         "username": row.username,
                         "lastName": row.lastName,
-                        "firstName": row.firstName
+                        "firstName": row.firstName,
+                        "addresses": addresses
                     })
                 return self.Response(200,200, 'Success', data)
         except Exception as e:

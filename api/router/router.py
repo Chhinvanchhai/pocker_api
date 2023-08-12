@@ -24,20 +24,19 @@ handleRequest = HandleRequest()
 
 
 # for hande request
-@app.before_request
-def middleware(): 
-    handleRequest.onRequest(request)
+# @app.before_request
+# def middleware(): 
+#     handleRequest.onRequest(request)
 
-@app.after_request
-def after_request(response):
-     handleRequest.onResponse(response)
-     return response
+# @app.after_request
+# def after_request(response):
+#      handleRequest.onResponse(response)
+#      return response
 # end request handle
 
 # user routing
 @app.route('/', methods = ['POST', 'GET'])
 def welcome():   
-  Utils.logs('tesing')
   return "wellcome"
 
 # user routing

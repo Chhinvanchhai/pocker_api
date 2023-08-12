@@ -1,23 +1,34 @@
 
 from flask import jsonify, make_response
-from api.config.db import db, User
+from api.config.db import db, User, engine, Address
 from api.dto.response.UserDto import UserDto
 from api.shared.Utils import FailedHanlde
-    
+from sqlalchemy import delete, select, update, asc
+from sqlalchemy.orm import Session
+
 class UserService: 
 
-    
+    def __init__(self):
+        self.session = Session(engine)
     
     def users(self):
         try: 
-            users = User.query.all()
-            return users
+            # users = db.query(User).join(Address, isouter= True).order_by(User.id.asc()).filter(User.id > 50)
+            # return users
+            query = db.query(User).order_by(User.id).filter(User.id > 5)
+            page = 2
+            per_page = 3
+            results = query.limit(per_page).offset((page - 1) * per_page).all()
+            return results
         except Exception as e:
             return f"An exception occurred: {str(e)}"
         
+
     
     def get(self,id):
-        user = User.query.get_or_404(id)
+        user = db.get(User,id)
+        if(not user):
+            return make_response(jsonify({"status": "Not found"}), 200)
         json = {
             "status": True,
             "data": {
@@ -41,24 +52,29 @@ class UserService:
                 firstName=data['firstName'],
                 status=data['status'],
             )
-            db.session.add(user)
-            db.session.commit()
+            db.add(user)
+            db.commit()
             json = {
                     "status": True,
                     "message": "Added Successfull"
             }
             return make_response(jsonify(json), 200)
         except FailedHanlde as e:
+            db.rollback()
             return str(e)
+        finally:
+            db.close()
 
     def update(self, id, data):
-        user = User.query.get_or_404(id)
-        user.lastName = data['lastName']
-        user.firstName = data['firstName']
-        user.username = data['username']
+        stmt = (
+            update(User).
+            where(User.id == id).
+            values(lastName=data['lastName'],firstName = data['firstName'])
+        )
+
 
         try:
-            db.session.commit()
+            db.execute(stmt)
             json = {
                 "status": True,
                 "message": "Update Successfull"
@@ -68,9 +84,9 @@ class UserService:
             return "error"
     
     def delete(self, id):
-        user = User.query.get(id)
-        db.session.delete(user)
-        db.session.commit()
+        db.execute(delete(User).where(User.id == id))
+        # db.commit()
+        # User.delete().where(User.id == id)
         json = {
             "status": True,
             "message": "Delete Successfull"

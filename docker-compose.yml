@@ -31,7 +31,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=chhai.chhin52@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
     volumes:
-      - db_data-data:/var/lib/pgadmin
+      - admin-data:/var/lib/pgadmin
 
 volumes:
   db_data:

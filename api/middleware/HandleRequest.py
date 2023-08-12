@@ -8,7 +8,7 @@ class HandleRequest(Utils):
 
     def onRequest(self, req):
         try: 
-            print(req.json, "json==")
+        
             if req.method == "POST":
                 self.logs("request: "+ str(req.json))
         except Exception as e: {
