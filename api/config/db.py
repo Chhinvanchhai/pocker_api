@@ -67,6 +67,7 @@ class User(Base):
     addresses: Mapped[List["Address"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+    roles: Mapped[List["Roles"]] = relationship(back_populates="user",  cascade="all, delete-orphan")
     # def __repr__(self) -> str:
     #     return f"User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
 
@@ -81,7 +82,13 @@ class Address(Base):
 
     #  def __repr__(self) -> str:
     #      return f"Address(id={self.id!r}, email_address={self.email_address!r})"
+class Roles(Base):
+     __tablename__ = "roles"
 
-
+     id: Mapped[int] = mapped_column(primary_key=True)
+     name: Mapped[str]
+     permissions: Mapped[str]
+     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+     user: Mapped["User"] = relationship(back_populates="roles")
 
 Base.metadata.create_all(engine)

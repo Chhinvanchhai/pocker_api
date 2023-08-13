@@ -31,16 +31,20 @@ class UserController(Utils):
                 data = []
                 for row in listUser:
                     addresses = []
+                    roles = []
                     if row:
                         for address in row.addresses:
                             addresses.append({"email_address": address.email_address, 'id': address.id})
+                        for rol in row.roles:
+                            roles.append({"name": rol.name, 'id': address.id})
                     data.append({
                         "id": row.id,
                         "email": row.email,
                         "username": row.username,
                         "lastName": row.lastName,
                         "firstName": row.firstName,
-                        "addresses": addresses
+                        "addresses": addresses,
+                        "roles": roles
                     })
                 return self.Response(200,200, 'Success', data)
         except Exception as e:

@@ -1,6 +1,6 @@
 
 from flask import jsonify, make_response
-from api.config.db import db, User, engine, Address
+from api.config.db import Roles, db, User, engine, Address
 from api.dto.response.UserDto import UserDto
 from api.shared.Utils import FailedHanlde
 from sqlalchemy import delete, select, update, asc
@@ -15,8 +15,9 @@ class UserService:
         try: 
             # users = db.query(User).join(Address, isouter= True).order_by(User.id.asc()).filter(User.id > 50)
             # return users
-            query = db.query(User).order_by(User.id).filter(User.id > 5)
-            page = 2
+            # query = db.query(User).order_by(User.id).filter(User.id > 5)
+            query =  db.query(User).join(Roles, isouter= True ).join(Address, isouter= True).order_by(User.id.asc())
+            page = 1
             per_page = 3
             results = query.limit(per_page).offset((page - 1) * per_page).all()
             return results
